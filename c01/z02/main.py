@@ -1,3 +1,5 @@
+import datetime
+
 from worker import Worker
 
 myList = [
@@ -28,7 +30,7 @@ def avgSalWithAge(workers, age):
     counterOlder = 0
 
     for worker in workers:
-        if worker.age[0] < age:
+        if datetime.datetime.now().year - worker.age[0] < age:
             salYounger += worker.salary
             counterYounger += 1
         else:
