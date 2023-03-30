@@ -1,8 +1,7 @@
 class Game:
 
-    def __init__(self, number_of_players):
-        self.number_of_players = number_of_players
+    def __init__(self, numberOfPlayers):
+        self.numberOfPlayers = numberOfPlayers
 
     def _play(self):
         print('Game started!')
-
