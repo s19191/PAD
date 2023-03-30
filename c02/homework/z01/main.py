@@ -4,12 +4,11 @@ square = lambda x: x ** 2
 
 cube = lambda x: x ** 3
 
-print('Square or cube? Type 2 for square, 3 for cube.')
-input = int(input())
+typeOfOperation = int(input('Square or cube? Type 2 for square, 3 for cube: '))
 
-if input == 2:
+if typeOfOperation == 2:
     for e in list:
         print(square(e))
-elif input == 3:
+elif typeOfOperation == 3:
     for e in list:
         print(cube(e))
