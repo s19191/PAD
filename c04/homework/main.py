@@ -25,6 +25,7 @@ groupedTask3['hour'] = groupedTask3['DateTime'] + groupedTask3['HowLong']
 groupedTask3['hour'] = groupedTask3['hour'].dt.time
 groupedTask3['DateTime'] = groupedTask3['DateTime'].astype(str) + ' - ' + groupedTask3['hour'].astype(str)
 groupedTask3 = groupedTask3.iloc[:, :-2]
+groupedTask3 = groupedTask3.iloc[:, 1:]
 
 groupedTask3.to_csv('Task_3_output.csv', index=False)
 
