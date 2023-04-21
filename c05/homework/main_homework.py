@@ -72,6 +72,10 @@ print(customers)
 
 print('Comparison of customers and orders')
 print('customers ', customers.shape, 'orders ', orders.shape)
+customers_rows, customers_cols = customers.shape
+orders_rows, orders_cols = orders.shape
+print('Orders have ', orders_rows - customers_rows, ' more rows than Customers')
+print('Orders have ', orders_cols - customers_cols, ' more columns than Customers')
 
 customers.rename(columns={'customerID': 'customer_id'}, inplace=True)
 print('After rename of column')
