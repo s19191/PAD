@@ -3,7 +3,7 @@ import pandas as pd
 # pd.set_option('display.max_rows', None)
 # pd.set_option('display.max_columns', None)
 
-orders = pd.read_csv('orders.csv', delimiter=",")
+orders = pd.read_csv('orders.csv', delimiter=',')
 
 print('Describe')
 print(orders.describe())
@@ -65,13 +65,13 @@ print(orders[orders.order_date.between('2014-12-31', '2016-08-02')])
 
 # ******************************************* Homework *******************************************
 
-customers = pd.read_csv('customers.csv', delimiter=",")
+customers = pd.read_csv('customers.csv', delimiter=',')
 
 print('Whole dataframe of customers.csv')
 print(customers)
 
 print('Comparison of customers and orders')
-print("customers ", customers.shape, "orders ", orders.shape)
+print('customers ', customers.shape, 'orders ', orders.shape)
 
 customers.rename(columns={'customerID': 'customer_id'}, inplace=True)
 print('After rename of column')
