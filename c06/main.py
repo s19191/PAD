@@ -1,16 +1,59 @@
-# This is a sample Python script.
+import random
+import string
+from urllib.request import urlretrieve
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
+xPaths = {
+    'cookies': "//div[@class='ok closeButton']",
+    'en': "//a[@href='http://www.pap.pl/en']",
+    'business': "//a[@href='/en/business']",
+    'lastPage': "//a[@title='Go to last page']"
+}
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+driver = webdriver.Chrome()
+driver.get('https://www.pap.pl/')
 
+print('Accept cookies')
+driver.find_element(by=By.XPATH, value=xPaths['cookies']).click()
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+print('Enlarge the browser window to full screen')
+driver.maximize_window()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+print('Change the website language to English')
+driver.find_element(by=By.XPATH, value=xPaths['en']).click()
+
+print('Enter the Business section')
+driver.find_element(by=By.XPATH, value=xPaths['business']).click()
+
+print('From the business section download all titles to the titles list')
+titlesList = driver\
+    .find_elements(
+        by=By.CSS_SELECTOR,
+        value='div.newsList div div.textWrapper h1 a, iv.newsList div div.row ul li div.textWrapper h2 a'
+    )
+
+print('Download all photos from this section to your local drive')
+paths = driver.\
+    find_elements(
+        by=By.CSS_SELECTOR,
+        value='div.newsList div div.imageWrapper a img, div.newsList div div.row ul li div.imageWrapper a img'
+    )
+
+for path in paths:
+    name = ''.join(random.SystemRandom().choice(string.ascii_letters) for _ in range(15))
+    urlretrieve(path.get_attribute("src"), f"{name}.jpg")
+
+print('Scroll down the page')
+driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+
+print('Go to the last page and prints its number (text attribute)')
+# lastPage = driver.find_element(by=By.XPATH, value=xPaths['lastPage'])
+# lastPage.click()
+# print(lastPage.get_attribute("href").split("=")[1])
+
+driver.find_element(by=By.XPATH, value='/html/body/div[1]/div[2]/section[2]/div/div[2]/div[1]/div[2]/div/nav/ul/li[5]/a/span[2]').click()
+print(driver.find_element(by=By.XPATH, value='/html/body/div[1]/div[2]/section[2]/div/div[2]/div[1]/div[2]/div/nav/ul/li[5]/a').text)
+
+driver.quit()
