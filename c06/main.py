@@ -31,8 +31,11 @@ print('From the business section download all titles to the titles list')
 titlesList = driver\
     .find_elements(
         by=By.CSS_SELECTOR,
-        value='div.newsList div div.textWrapper h1 a, iv.newsList div div.row ul li div.textWrapper h2 a'
+        value='div.newsList div div.textWrapper h1 a, div.newsList div div.row ul li div.textWrapper h2 a'
     )
+
+for el in titlesList:
+    print(el.text)
 
 print('Download all photos from this section to your local drive')
 paths = driver.\
@@ -49,11 +52,8 @@ print('Scroll down the page')
 driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 
 print('Go to the last page and prints its number (text attribute)')
-# lastPage = driver.find_element(by=By.XPATH, value=xPaths['lastPage'])
-# lastPage.click()
-# print(lastPage.get_attribute("href").split("=")[1])
-
-driver.find_element(by=By.XPATH, value='/html/body/div[1]/div[2]/section[2]/div/div[2]/div[1]/div[2]/div/nav/ul/li[5]/a/span[2]').click()
-print(driver.find_element(by=By.XPATH, value='/html/body/div[1]/div[2]/section[2]/div/div[2]/div[1]/div[2]/div/nav/ul/li[5]/a').text)
+lastPage = driver.find_element(by=By.XPATH, value=xPaths['lastPage'])
+lastPage.click()
+print(driver.current_url.split("=")[1])
 
 driver.quit()
