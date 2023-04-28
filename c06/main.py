@@ -9,7 +9,9 @@ xPaths = {
     'cookies': "//div[@class='ok closeButton']",
     'en': "//a[@href='http://www.pap.pl/en']",
     'business': "//a[@href='/en/business']",
-    'lastPage': "//a[@title='Go to last page']"
+    'lastPage': "//a[@title='Go to last page']",
+    'allPages': "//ul[contains(@class, 'js-pager__items')]",
+    'activeOnePage': "//li[contains(@class, 'is-active')]"
 }
 
 driver = webdriver.Chrome()
@@ -54,6 +56,11 @@ driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 print('Go to the last page and prints its number (text attribute)')
 lastPage = driver.find_element(by=By.XPATH, value=xPaths['lastPage'])
 lastPage.click()
-print(driver.current_url.split("=")[1])
+
+pages = driver.find_element(by=By.XPATH, value=xPaths['allPages'])
+actvieOne = pages.find_element(by=By.XPATH, value=xPaths['activeOnePage'])
+print(actvieOne.text)
+
+# print(driver.current_url.split("=")[1])
 
 driver.quit()
