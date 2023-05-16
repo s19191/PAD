@@ -1,16 +1,25 @@
-# This is a sample Python script.
+import pandas as pd
+import statsmodels.formula.api as smf
+from statsmodels.stats.weightstats import ttest_ind
+import plotly.graph_objects as go
+import plotly.express as px
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# z1
 
+df = pd.read_csv('PAD_09_PD.csv', delimiter=";")
+income_df = df.iloc[:, [0, 2]]
+male = income_df.query('Gender == "Male"')['Annual_Income']
+female = income_df.query('Gender == "Female"')['Annual_Income']
+res = ttest_ind(male, female)
+# p value > 0,05 nie możemy odrzucić hipotezy zerowej
+print(res)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# 2
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+model = smf.ols(formula='Spending_Score ~ Gender + Age + Annual_Income', data=df).fit()
+print(model.summary())
+print(df.corr())
+fig = px.imshow(df.corr())
+fig.show()
+model2 = smf.ols(formula='Spending_Score ~ + Age + Annual_Income', data=df).fit()
+print(model2.summary())
